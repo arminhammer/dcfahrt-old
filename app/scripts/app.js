@@ -39,22 +39,34 @@ angular.module('Dcfahrt', ['ionic', 'config', 'Dcfahrt.controllers', 'Dcfahrt.se
 
     // Each tab has its own nav history stack:
 
+    .state('tab.home', {
+      url: '/home',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/tab-home.html',
+          controller: 'HomeCtrl'
+        }
+      }
+    })
+
+    .state('tab.stations', {
+      url: '/stations',
+      views: {
+        'tab-stations': {
+          templateUrl: 'templates/tab-stations.html',
+          controller: 'StationCtrl'
+        }
+      }
+    })
+
+    // All tabs below need to be removed
+
     .state('tab.dash', {
       url: '/dash',
       views: {
         'tab-dash': {
           templateUrl: 'templates/tab-dash.html',
           controller: 'DashCtrl'
-        }
-      }
-    })
-
-    .state('tab.home', {
-      url: '/home',
-      views: {
-        'tab-dash': {
-          templateUrl: 'templates/tab-home.html',
-          controller: 'HomeCtrl'
         }
       }
     })
