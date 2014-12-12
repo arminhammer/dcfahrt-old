@@ -54,7 +54,7 @@ angular.module('Dcfahrt', ['ionic', 'config', 'Dcfahrt.controllers', 'Dcfahrt.se
       views: {
         'tab-stations': {
           templateUrl: 'templates/tab-stations.html',
-          controller: 'StationCtrl'
+          controller: 'StationsCtrl'
         }
       }
     })

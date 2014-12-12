@@ -1,7 +1,21 @@
 'use strict';
 angular.module('Dcfahrt.controllers', [])
 
-  .controller('HomeCtrl', function($scope) {
+  .config(function ( $httpProvider) {
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.defaults.useXDomain = true;
+  })
+
+  .controller('HomeCtrl', function($scope, RailIncidentsService) {
+
+    $scope.railIncidents = [];
+
+    RailIncidentsService.getRailIncidents()
+      .then(function(data) {
+        console.log('Got data in controller:');
+        console.log(data);
+        $scope.railIncidents = data.Incidents;
+      })
 
   })
 

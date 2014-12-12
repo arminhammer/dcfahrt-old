@@ -1,5 +1,12 @@
 <ion-view title="Home">
   <ion-content class="has-header padding">
     <h1>Home</h1>
+    <h1>Alerts:</h1>
+    <ion-list>
+      <ion-item class="item-icon-right" ng-repeat="incident in railIncidents" type="item-text-wrap" href="#/tab/incident/{{incident.IncidentID}}">
+        {{incident.DateUpdated}}
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
