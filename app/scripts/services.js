@@ -36,15 +36,58 @@ angular.module('Dcfahrt.services', ['ngResource'])
 /**
  * A simple example service that returns some data.
  */
-  .factory('RailIncidentsService', function($http, $resource, $q) {
-    // Might use a resource here that returns a JSON array
+  .factory('RailService', function($http, $resource, $q) {
 
-    //$http.defaults.useXDomain = true;
-    //delete $http.defaults.headers.common['X-Requested-With'];
-    console.log($http.defaults.headers);
+    var lines = {};
+    lines.GR = { id: 'GR', color: 'Green' };
+    lines.BL = { id: 'BL', color: 'Blue' };
+    lines.SV = { id: 'SV', color: 'Silver' };
+    lines.RD = { id: 'RD', color: 'Red' },
+    lines.OR = { id: 'OR', color: 'Orange' };
+    lines.YL = { id: 'YL', color: 'Yellow' };
 
     console.log('Starting RailIncidentsService');
     var railIncidents = {};
+
+    railIncidents.getLines = function() {
+
+      return lines;
+      /*
+      {
+        { 'GR': { color: 'Green' },
+        { id: 'BL', color: 'Blue' },
+        { id: 'SV', color: 'Silver' },
+        { id: 'RD', color: 'Red' },
+        { id: 'OR', color: 'Orange' },
+        { id: 'YL', color: 'Yellow' }
+      };
+      */
+    };
+
+    railIncidents.getStations = function(lineId) {
+
+      console.log('Start getting stations');
+
+      var deferred = $q.defer();
+
+      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStations?LineCode=' + lineId + '&api_key=kfgpmgvfgacx98de9q3xazww';
+
+      console.log(url);
+
+      $http.get(url)
+        .success(function(data) {
+          console.log('Got data');
+          console.log(data);
+          deferred.resolve(data);
+        })
+        .error(function(err) {
+          console.log('There was an error: %s', err);
+          deferred.reject('There was an error: %s', err);
+        });
+
+      return deferred.promise;
+
+    };
 
     railIncidents.getRailIncidents = function() {
 
@@ -52,29 +95,9 @@ angular.module('Dcfahrt.services', ['ngResource'])
 
       var deferred = $q.defer();
 
+      var url = 'http://wmataapibeta.azure-api.net/Incidents.svc/json/Incidents?api_key=kfgpmgvfgacx98de9q3xazww';
 
-      console.log('In defer');
-      //delete $http.defaults.headers.common['X-Requested-With'];
-      //delete $http.defaults.headers.common['Origin'];
-
-      /*
-       var User = $resource('http://ricardohbin.com/cors/testcors.php', {
-       userId: '@id'
-       });
-       User.get({
-       userId: 123
-       }, function(data) {
-       alert(data.ok);
-       });
-       */
-
-      $http({
-        url: 'http://wmataapibeta.azure-api.net/Incidents.svc/json/Incidents?api_key=kfgpmgvfgacx98de9q3xazww',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      $http.get(url)
         .success(function(data) {
           console.log('Got data');
           console.log(data);

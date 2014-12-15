@@ -2,19 +2,19 @@
 angular.module('Dcfahrt.controllers', [])
 
   /*
-  .config(function ( $httpProvider) {
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    $httpProvider.defaults.useXDomain = true;
-  })
-  */
+   .config(function ( $httpProvider) {
+   delete $httpProvider.defaults.headers.common['X-Requested-With'];
+   $httpProvider.defaults.useXDomain = true;
+   })
+   */
 
-  .controller('HomeCtrl', function($scope, RailIncidentsService) {
+  .controller('HomeCtrl', function($scope, RailService) {
 
     $scope.railIncidents = [];
 
     console.log('Starting here');
 
-    RailIncidentsService.getRailIncidents()
+    RailService.getRailIncidents()
       .then(function(data) {
         console.log('Got data in controller:');
         console.log(data);
@@ -23,8 +23,29 @@ angular.module('Dcfahrt.controllers', [])
 
   })
 
-  .controller('StationsCtrl', function($scope, Friends) {
-    $scope.friends = Friends.all();
+  .controller('StationsCtrl', function($scope, RailService) {
+
+    $scope.lines = RailService.getLines();
+
+  })
+
+  .controller('StationsLineCtrl', function($scope, $stateParams, RailService) {
+
+    $scope.lineId = $stateParams.lineId;
+    $scope.lineColor = RailService.getLines()[$scope.lineId];
+
+    RailService.getStations($scope.lineId)
+      .then(function(data) {
+         $scope.stations = data.Stations;
+      });
+
+    console.log('id is %s and color is %s', $scope.lineId, $scope.lineColor);
+
+    console.log('COntroller stations:');
+    console.log($scope.stations);
+    console.log('StationsLineCtrl has id %s', $stateParams.lineId);
+    //$scope.friend = Friends.get($stateParams.friendId);
+
   })
 
   // Remove all below
