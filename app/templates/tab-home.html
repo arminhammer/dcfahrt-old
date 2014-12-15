@@ -4,7 +4,7 @@
     <h1>Alerts:</h1>
     <ion-list>
       <ion-item class="item-icon-right" ng-repeat="incident in railIncidents" type="item-text-wrap" href="#/tab/incident/{{incident.IncidentID}}">
-        {{incident.DateUpdated}}
+        {{incident.DateUpdated}} : {{ incident.Description }}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>

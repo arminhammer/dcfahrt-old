@@ -1,12 +1,12 @@
 'use strict';
 angular.module('Dcfahrt.services', ['ngResource'])
 
-  .config(function ( $httpProvider) {
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    $httpProvider.defaults.useXDomain = true;
-    console.log('Set.');
-    console.log($httpProvider.defaults.useXDomain);
-  })
+  //.config(function ( $httpProvider) {
+    //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    //$httpProvider.defaults.useXDomain = true;
+    //console.log('Set.');
+    //console.log($httpProvider.defaults.useXDomain);
+  //})
 
 /**
  * A simple example service that returns some data.
@@ -39,8 +39,8 @@ angular.module('Dcfahrt.services', ['ngResource'])
   .factory('RailIncidentsService', function($http, $resource, $q) {
     // Might use a resource here that returns a JSON array
 
-    $http.defaults.useXDomain = true;
-    delete $http.defaults.headers.common['X-Requested-With'];
+    //$http.defaults.useXDomain = true;
+    //delete $http.defaults.headers.common['X-Requested-With'];
     console.log($http.defaults.headers);
 
     console.log('Starting RailIncidentsService');
@@ -48,8 +48,12 @@ angular.module('Dcfahrt.services', ['ngResource'])
 
     railIncidents.getRailIncidents = function() {
 
+      console.log('Start getting incidents');
+
       var deferred = $q.defer();
 
+
+      console.log('In defer');
       //delete $http.defaults.headers.common['X-Requested-With'];
       //delete $http.defaults.headers.common['Origin'];
 
@@ -65,7 +69,7 @@ angular.module('Dcfahrt.services', ['ngResource'])
        */
 
       $http({
-        url: 'http://api.wmata.com/Rail.svc/json/jLines?api_key=kfgpmgvfgacx98de9q3xazww',
+        url: 'http://wmataapibeta.azure-api.net/Incidents.svc/json/Incidents?api_key=kfgpmgvfgacx98de9q3xazww',
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
