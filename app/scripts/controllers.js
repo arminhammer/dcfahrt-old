@@ -48,6 +48,21 @@ angular.module('Dcfahrt.controllers', [])
 
   })
 
+
+  .controller('StationsDetailsCtrl', function($scope, $stateParams, RailService) {
+
+    console.log('StationsDetailsCtrl');
+    $scope.stationId = $stateParams.stationId;
+
+    RailService.getStationDetails($scope.stationId)
+      .then(function(data) {
+        $scope.station = data;
+      });
+
+    console.log('Station:');
+    console.log($scope.station.Name);
+  })
+
   // Remove all below
 
   .controller('DashCtrl', function($scope) {

@@ -60,7 +60,7 @@ angular.module('Dcfahrt', ['ionic', 'config', 'Dcfahrt.controllers', 'Dcfahrt.se
     })
 
     .state('tab.stations-line', {
-      url: '/stations/:lineId',
+      url: '/stations/lines/:lineId',
       views: {
         'tab-stations': {
           templateUrl: 'templates/stations-line.html',
@@ -70,11 +70,11 @@ angular.module('Dcfahrt', ['ionic', 'config', 'Dcfahrt.controllers', 'Dcfahrt.se
     })
 
     .state('tab.stations-detail', {
-      url: '/stations/:lineId/:stationId',
+      url: '/stations/details/:stationId',
       views: {
         'tab-stations': {
           templateUrl: 'templates/stations-detail.html',
-          controller: 'StationsDetailCtrl'
+          controller: 'StationsDetailsCtrl'
         }
       }
     })

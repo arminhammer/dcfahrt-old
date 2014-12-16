@@ -2,10 +2,10 @@
 angular.module('Dcfahrt.services', ['ngResource'])
 
   //.config(function ( $httpProvider) {
-    //delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    //$httpProvider.defaults.useXDomain = true;
-    //console.log('Set.');
-    //console.log($httpProvider.defaults.useXDomain);
+  //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  //$httpProvider.defaults.useXDomain = true;
+  //console.log('Set.');
+  //console.log($httpProvider.defaults.useXDomain);
   //})
 
 /**
@@ -38,30 +38,46 @@ angular.module('Dcfahrt.services', ['ngResource'])
  */
   .factory('RailService', function($http, $resource, $q) {
 
-    var lines = {};
-    lines.GR = { id: 'GR', color: 'Green' };
-    lines.BL = { id: 'BL', color: 'Blue' };
-    lines.SV = { id: 'SV', color: 'Silver' };
-    lines.RD = { id: 'RD', color: 'Red' },
-    lines.OR = { id: 'OR', color: 'Orange' };
-    lines.YL = { id: 'YL', color: 'Yellow' };
-
     console.log('Starting RailIncidentsService');
     var railIncidents = {};
 
+    railIncidents.lines = {};
+    railIncidents.lines.GR = { id: 'GR', color: 'Green' };
+    railIncidents.lines.BL = { id: 'BL', color: 'Blue' };
+    railIncidents.lines.SV = { id: 'SV', color: 'Silver' };
+    railIncidents.lines.RD = { id: 'RD', color: 'Red' };
+    railIncidents.lines.OR = { id: 'OR', color: 'Orange' };
+    railIncidents.lines.YL = { id: 'YL', color: 'Yellow' };
+
     railIncidents.getLines = function() {
 
-      return lines;
-      /*
-      {
-        { 'GR': { color: 'Green' },
-        { id: 'BL', color: 'Blue' },
-        { id: 'SV', color: 'Silver' },
-        { id: 'RD', color: 'Red' },
-        { id: 'OR', color: 'Orange' },
-        { id: 'YL', color: 'Yellow' }
-      };
-      */
+      return railIncidents.lines;
+
+    };
+
+    railIncidents.getStationDetails = function(stationId) {
+
+      console.log('Start getting stations');
+
+      var deferred = $q.defer();
+
+      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStationInfo?StationCode=' + stationId + '&api_key=kfgpmgvfgacx98de9q3xazww';
+
+      console.log(url);
+
+      $http.get(url)
+        .success(function(data) {
+          console.log('Got data');
+          console.log(data);
+          deferred.resolve(data);
+        })
+        .error(function(err) {
+          console.log('There was an error: %s', err);
+          deferred.reject('There was an error: %s', err);
+        });
+
+      return deferred.promise;
+
     };
 
     railIncidents.getStations = function(lineId) {

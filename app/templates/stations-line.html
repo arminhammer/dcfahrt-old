@@ -1,7 +1,7 @@
 <ion-view title="{{ lineColor.color }} Line Stations">
   <ion-content class="has-header">
     <ion-list>
-      <ion-item class="item-icon-right" ng-repeat="station in stations | orderBy: 'Name'" type="item-text-wrap" href="#/tab/stations/detail/{{station.Code}}">
+      <ion-item class="item-icon-right" ng-repeat="station in stations | orderBy: 'Name'" type="item-text-wrap" href="#/tab/stations/details/{{station.Code}}">
         {{ station.Name }}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
