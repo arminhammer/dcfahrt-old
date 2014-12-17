@@ -33,10 +33,11 @@ angular.module('Dcfahrt.controllers', [])
 
     $scope.lineId = $stateParams.lineId;
     $scope.lineColor = RailService.getLines()[$scope.lineId];
+    $scope.stations = [];
 
     RailService.getStations($scope.lineId)
       .then(function(data) {
-         $scope.stations = data.Stations;
+        $scope.stations = data.Stations;
       });
 
     console.log('id is %s and color is %s', $scope.lineId, $scope.lineColor);
@@ -53,14 +54,17 @@ angular.module('Dcfahrt.controllers', [])
 
     console.log('StationsDetailsCtrl');
     $scope.stationId = $stateParams.stationId;
+    $scope.station = {};
 
     RailService.getStationDetails($scope.stationId)
       .then(function(data) {
         $scope.station = data;
+        console.log('station scope');
+        console.log($scope.station);
       });
 
-    console.log('Station:');
-    console.log($scope.station.Name);
+    //console.log('Station:');
+    //console.log($scope.station.Name);
   })
 
   // Remove all below
