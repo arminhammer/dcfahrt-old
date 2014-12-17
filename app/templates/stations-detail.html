@@ -17,5 +17,6 @@
     {{station.LineCode4}}<br>
     {{station.StationTogether1}}<br>
     {{station.StationTogether2}}<br>
+    <ion-toggle ng-model="station.favorite" ng-change="pushFavoriteChange()" toggle-class="toggle-calm">Favorite</ion-toggle>
   </ion-content>
 </ion-view>

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Dcfahrt.services', ['ngResource'])
+angular.module('Dcfahrt.services', [])
 
   //.config(function ( $httpProvider) {
   //delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -8,54 +8,73 @@ angular.module('Dcfahrt.services', ['ngResource'])
   //console.log($httpProvider.defaults.useXDomain);
   //})
 
-/**
- * A simple example service that returns some data.
- */
-  .factory('Stations', function() {
-    // Might use a resource here that returns a JSON array
-
-    // Some fake testing data
-    var friends = [
-      { id: 0, name: 'Scruff McGruff' },
-      { id: 1, name: 'G.I. Joe' },
-      { id: 2, name: 'Miss Frizzle' },
-      { id: 3, name: 'Ash Ketchum' }
-    ];
-
+  // service from http://learn.ionicframework.com/formulas/localstorage/
+  .factory('$localstorage', ['$window', function($window) {
     return {
-      all: function() {
-        return friends;
+      setString: function(key, value) {
+        $window.localStorage[key] = value;
       },
-      get: function(friendId) {
-        // Simple index lookup
-        return friends[friendId];
+      getString: function(key, defaultValue) {
+        return $window.localStorage[key] || defaultValue;
+      },
+      setObject: function(key, value) {
+        $window.localStorage[key] = JSON.stringify(value);
+      },
+      getObject: function(key) {
+        return JSON.parse($window.localStorage[key] || '{}');
       }
+    }
+  }])
+
+  .factory('FavoriteStationsService', ['$http', '$q', '$localstorage', function($http, $q, $localstorage) {
+
+    var favoriteStationsService = {};
+
+    //favoriteStationsService.favoriteStations = $localstorage.getObject('favoriteStations') || {};
+
+    favoriteStationsService.favoriteStations = {};
+
+    favoriteStationsService.getFavoriteStations = function() {
+
+      return favoriteStationsService.favoriteStations;
+
     };
-  })
+
+    favoriteStationsService.addFavoriteStation = function(station) {
+
+      favoriteStationsService.favoriteStations[station.Code] = station;
+
+      //$localstorage.setObject('favoriteStations', favoriteStationsService.favoriteStations);
+
+    };
+
+    return favoriteStationsService;
+
+  }])
 
 /**
  * A simple example service that returns some data.
  */
-  .factory('RailService', function($http, $resource, $q) {
+  .factory('RailService', function($http, $q) {
 
     console.log('Starting RailIncidentsService');
-    var railIncidents = {};
+    var railService = {};
 
-    railIncidents.lines = {};
-    railIncidents.lines.GR = { id: 'GR', color: 'Green' };
-    railIncidents.lines.BL = { id: 'BL', color: 'Blue' };
-    railIncidents.lines.SV = { id: 'SV', color: 'Silver' };
-    railIncidents.lines.RD = { id: 'RD', color: 'Red' };
-    railIncidents.lines.OR = { id: 'OR', color: 'Orange' };
-    railIncidents.lines.YL = { id: 'YL', color: 'Yellow' };
+    railService.lines = {};
+    railService.lines.GR = { id: 'GR', color: 'Green' };
+    railService.lines.BL = { id: 'BL', color: 'Blue' };
+    railService.lines.SV = { id: 'SV', color: 'Silver' };
+    railService.lines.RD = { id: 'RD', color: 'Red' };
+    railService.lines.OR = { id: 'OR', color: 'Orange' };
+    railService.lines.YL = { id: 'YL', color: 'Yellow' };
 
-    railIncidents.getLines = function() {
+    railService.getLines = function() {
 
-      return railIncidents.lines;
+      return railService.lines;
 
     };
 
-    railIncidents.getStationDetails = function(stationId) {
+    railService.getStationDetails = function(stationId) {
 
       console.log('Start getting stations');
 
@@ -80,7 +99,7 @@ angular.module('Dcfahrt.services', ['ngResource'])
 
     };
 
-    railIncidents.getStations = function(lineId) {
+    railService.getStations = function(lineId) {
 
       console.log('Start getting stations');
 
@@ -105,7 +124,7 @@ angular.module('Dcfahrt.services', ['ngResource'])
 
     };
 
-    railIncidents.getRailIncidents = function() {
+    railService.getRailIncidents = function() {
 
       console.log('Start getting incidents');
 
@@ -128,32 +147,6 @@ angular.module('Dcfahrt.services', ['ngResource'])
 
     };
 
-    return railIncidents;
+    return railService;
 
-  })
-
-
-/**
- * A simple example service that returns some data.
- */
-  .factory('Friends', function() {
-    // Might use a resource here that returns a JSON array
-
-    // Some fake testing data
-    var friends = [
-      { id: 0, name: 'Scruff McGruff' },
-      { id: 1, name: 'G.I. Joe' },
-      { id: 2, name: 'Miss Frizzle' },
-      { id: 3, name: 'Ash Ketchum' }
-    ];
-
-    return {
-      all: function() {
-        return friends;
-      },
-      get: function(friendId) {
-        // Simple index lookup
-        return friends[friendId];
-      }
-    };
   });
