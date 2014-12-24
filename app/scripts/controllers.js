@@ -8,9 +8,8 @@ angular.module('Dcfahrt.controllers', [])
    })
    */
 
-  .controller('HomeCtrl', function($scope, RailService, FavoriteStationsService) {
+  .controller('HomeCtrl', function($scope, RailService) {
 
-    $scope.favoriteStations = FavoriteStationsService.getFavoriteStations();
     console.log($scope.favoriteStations);
     $scope.railIncidents = [];
 
@@ -21,7 +20,14 @@ angular.module('Dcfahrt.controllers', [])
         console.log('Got data in controller:');
         console.log(data);
         $scope.railIncidents = data.Incidents;
-      })
+      });
+
+    RailService.getFavoriteStations()
+      .then(function(data) {
+        $scope.favoriteStations = data;
+        console.log('Favorite stations');
+        console.log($scope.favoriteStations);
+      });
 
   })
 
@@ -52,18 +58,18 @@ angular.module('Dcfahrt.controllers', [])
   })
 
 
-  .controller('StationsDetailsCtrl', function($scope, $stateParams, RailService, FavoriteStationsService) {
+  .controller('StationsDetailsCtrl', function($scope, $stateParams, RailService) {
 
     console.log('StationsDetailsCtrl');
     $scope.stationId = $stateParams.stationId;
-    $scope.station = {};
+    //$scope.station = {};
 
     $scope.pushFavoriteChange = function() {
 
       console.log('Favorite toggled: %s', $scope.station.favorite);
 
       if($scope.station.favorite) {
-        FavoriteStationsService.addFavoriteStation($scope.station);
+        RailService.addFavoriteStation($scope.station.Code);
       }
 
     };
@@ -75,8 +81,6 @@ angular.module('Dcfahrt.controllers', [])
         console.log('station scope');
         console.log($scope.station);
       });
-
-
 
     //console.log('Station:');
     //console.log($scope.station.Name);

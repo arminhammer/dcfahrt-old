@@ -77,6 +77,32 @@ angular.module('Dcfahrt.services', [])
 
     };
 
+    railService.favoriteStationCodes = {};
+
+    railService.getFavoriteStations = function() {
+
+      var promiseArray = [];
+
+      for (var code in railService.favoriteStationCodes) {
+        if (railService.favoriteStationCodes.hasOwnProperty(code)) {
+          console.log(code, railService.favoriteStationCodes[code]);
+          promiseArray.push(railService.getStationDetails(code));
+        }
+      }
+
+      return $q.all(promiseArray);
+
+    };
+
+    railService.addFavoriteStation = function(stationCode) {
+
+      console.log('Adding %s', stationCode);
+      railService.favoriteStationCodes[stationCode] = stationCode;
+
+      //$localstorage.setObject('favoriteStations', favoriteStationsService.favoriteStations);
+
+    };
+
     railService.getStationDetails = function(stationId) {
 
       console.log('Start getting stations');
