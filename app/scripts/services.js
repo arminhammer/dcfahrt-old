@@ -55,7 +55,10 @@ angular.module('Dcfahrt.services', [])
 /**
  * A simple example service that returns some data.
  */
-  .factory('RailService', function($http, $q) {
+  .factory('RailService', function($http, $q, ENV) {
+
+    console.log('ENV:');
+    console.log(ENV);
 
     console.log('Starting RailIncidentsService');
     var railService = {};
@@ -80,7 +83,7 @@ angular.module('Dcfahrt.services', [])
 
       var deferred = $q.defer();
 
-      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStationInfo?StationCode=' + stationId + '&api_key=kfgpmgvfgacx98de9q3xazww';
+      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStationInfo?StationCode=' + stationId + '&api_key=' + ENV.apiKey;
 
       console.log(url);
 
@@ -105,7 +108,7 @@ angular.module('Dcfahrt.services', [])
 
       var deferred = $q.defer();
 
-      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStations?LineCode=' + lineId + '&api_key=kfgpmgvfgacx98de9q3xazww';
+      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStations?LineCode=' + lineId + '&api_key=' + ENV.apiKey;
 
       console.log(url);
 
@@ -130,7 +133,7 @@ angular.module('Dcfahrt.services', [])
 
       var deferred = $q.defer();
 
-      var url = 'http://wmataapibeta.azure-api.net/Incidents.svc/json/Incidents?api_key=kfgpmgvfgacx98de9q3xazww';
+      var url = 'http://wmataapibeta.azure-api.net/Incidents.svc/json/Incidents?api_key=' + ENV.apiKey;
 
       $http.get(url)
         .success(function(data) {

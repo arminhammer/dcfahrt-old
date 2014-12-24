@@ -41,7 +41,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            apiEndpoint: 'http://dev.yoursite.com:10000/'
+            apiEndpoint: 'http://dev.yoursite.com:10000/',
+            apiKey: 'kfgpmgvfgacx98de9q3xazww'
           }
         }
       },
@@ -49,7 +50,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            apiEndpoint: 'http://api.yoursite.com/'
+            apiEndpoint: 'http://api.yoursite.com/',
+            apiKey: 'kfgpmgvfgacx98de9q3xazww'
           }
         }
       }
@@ -155,7 +157,7 @@ module.exports = function (grunt) {
       }
     },
 
-    
+
 
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
