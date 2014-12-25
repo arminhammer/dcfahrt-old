@@ -37,6 +37,10 @@ angular.module('Dcfahrt.controllers', [])
 
   })
 
+  .controller('MapCtrl', function($scope) {
+
+  })
+
   .controller('StationsLineCtrl', function($scope, $stateParams, RailService) {
 
     $scope.lineId = $stateParams.lineId;

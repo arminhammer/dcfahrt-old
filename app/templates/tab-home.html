@@ -3,8 +3,8 @@
     <h1>Home</h1>
     <h1>Favorite Stations:</h1>
     <ion-list>
-      <ion-item class="item-icon-right" ng-repeat="station in favoriteStations" type="item-text-wrap" href="#/tab/incident/{{station}}">
-        {{station.Name}}
+      <ion-item class="item-icon-right" ng-repeat="station in favoriteStations" type="item-text-wrap" href="#/tab/stations/details/{{station.Code}}">
+        <h2>{{station.Name}}</h2>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>

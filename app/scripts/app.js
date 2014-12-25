@@ -49,6 +49,17 @@ angular.module('Dcfahrt', ['ionic', 'config', 'Dcfahrt.controllers', 'Dcfahrt.se
       }
     })
 
+    .state('tab.map', {
+      url: '/map',
+      views: {
+        'tab-map': {
+          templateUrl: 'templates/tab-map.html',
+          controller: 'MapCtrl'
+        }
+      }
+    })
+
+
     .state('tab.stations', {
       url: '/stations',
       views: {
