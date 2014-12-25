@@ -86,6 +86,26 @@ angular.module('Dcfahrt.controllers', [])
         console.log($scope.station);
       });
 
+    RailService.getStationNextTrainTimes($scope.stationId)
+      .then(function(data) {
+        var trainArray = data.Trains;
+        $scope.nextTrains = {};
+        angular.forEach(trainArray, function(train) {
+          if($scope.nextTrains[train.Destination]) {
+            $scope.nextTrains[train.Destination].times.push(train.Min);
+          }
+          else {
+            $scope.nextTrains[train.Destination] = { "Destination": train.Destination };
+            $scope.nextTrains[train.Destination].times = [];
+            $scope.nextTrains[train.Destination].times.push(train.Min);
+          }
+
+          console.log(train);
+        });
+        console.log('station nextTrains');
+        console.log($scope.nextTrains);
+      });
+
     //console.log('Station:');
     //console.log($scope.station.Name);
   })

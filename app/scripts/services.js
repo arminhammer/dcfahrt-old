@@ -109,7 +109,32 @@ angular.module('Dcfahrt.services', [])
 
       var deferred = $q.defer();
 
-      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStationInfo?StationCode=' + stationId + '&api_key=' + ENV.apiKey;
+      var url = 'https://api.wmata.com/Rail.svc/json/jStationInfo?StationCode=' + stationId + '&api_key=' + ENV.apiKey;
+
+      console.log(url);
+
+      $http.get(url)
+        .success(function(data) {
+          console.log('Got data');
+          console.log(data);
+          deferred.resolve(data);
+        })
+        .error(function(err) {
+          console.log('There was an error: %s', err);
+          deferred.reject('There was an error: %s', err);
+        });
+
+      return deferred.promise;
+
+    };
+
+    railService.getStationNextTrainTimes = function(stationId) {
+
+      console.log('Start getting stations');
+
+      var deferred = $q.defer();
+
+      var url = 'https://api.wmata.com/StationPrediction.svc/json/GetPrediction/' + stationId + '?api_key=' + ENV.apiKey;
 
       console.log(url);
 
@@ -134,7 +159,7 @@ angular.module('Dcfahrt.services', [])
 
       var deferred = $q.defer();
 
-      var url = 'http://wmataapibeta.azure-api.net/Rail.svc/json/jStations?LineCode=' + lineId + '&api_key=' + ENV.apiKey;
+      var url = 'https://api.wmata.com/Rail.svc/json/jStations?LineCode=' + lineId + '&api_key=' + ENV.apiKey;
 
       console.log(url);
 
@@ -159,7 +184,7 @@ angular.module('Dcfahrt.services', [])
 
       var deferred = $q.defer();
 
-      var url = 'http://wmataapibeta.azure-api.net/Incidents.svc/json/Incidents?api_key=' + ENV.apiKey;
+      var url = 'https://api.wmata.com/Incidents.svc/json/Incidents?api_key=' + ENV.apiKey;
 
       $http.get(url)
         .success(function(data) {
